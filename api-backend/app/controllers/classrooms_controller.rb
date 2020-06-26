@@ -10,6 +10,7 @@ class ClassroomsController < ApplicationController
     end
 
     def show
+        # binding.pry
         classroom = Classroom.find(params[:id])
         render json: classroom
     end
