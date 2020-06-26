@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
     Classroom.getDDChange()
     
 })
-// const all = []
+const all = []
 let dd = document.querySelector(".classroom-select")
 let classroom = document.querySelector(".classroom")
 class Classroom {
@@ -14,20 +14,9 @@ class Classroom {
         this.id = classroom.id; 
         this.name = classroom.name;
         this.students = classroom.students
-        // all.push(this)
     }
 
    
-            // set allClassrooms([]) {
-            //     this.allClassrooms = []
-            // }
-            // get allClassrooms() {
-            //     return this.allClassrooms
-            // }
-    // static allClassrooms() {
-    //     let all = Classroom.all
-    //     return all
-    // }
     static createClassroom() {
         let classForm = document.querySelector(".new-classroom-form")
         classForm.addEventListener("submit", function(event) {
@@ -53,7 +42,7 @@ class Classroom {
     }
 
    
-    static getAllClassrooms() {
+     static getAllClassrooms() {
         //get all classrooms from api
         //add classrooms to dom
         
@@ -63,11 +52,13 @@ class Classroom {
             data.map(c => {
 
                 let newClassroom = new Classroom(c)
-                dd.innerHTML = dd.innerHTML + `<option value="${c.id}">${c.name}</option>`
-                
+                // dd.innerHTML = dd.innerHTML + `<option value="${c.id}">${c.name}</option>`
+                all.push(newClassroom)
+                 
                 newClassroom.addClassroomToDom()
             })
         })
+        .then(data => Classroom.updateDropDown())
     }
 
     addClassroomToDom() {
@@ -78,24 +69,24 @@ class Classroom {
     }
 
     static getDDChange() {
-        
+       
         dd.addEventListener("change", function(e){
             classroom.innerHTML = "";
-            //e.target.value 
-            fetch(`http://localhost:3000/classrooms/${e.target.value}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log("data", data)
-                data.students.map(element => {
-                let newStudent = new Student(element)
+            let filteredClassroom = all.find(room => room.id === parseInt(e.target.value, 10))
+            
+            filteredClassroom.students.forEach(student => {
+                let newStudent = new Student(student)
                 newStudent.appendStudentToDom()
             })
         })
-         
-    
-        })
     }
     
+    static updateDropDown() {
+        all.forEach(room => {
+            dd.innerHTML = dd.innerHTML + `<option value="${room.id}">${room.name}</option>`
+        })
+        
+    }
     
 
     
