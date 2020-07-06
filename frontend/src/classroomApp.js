@@ -6,7 +6,7 @@ class ClassroomApp {
         this.elementsAndEventListeners()
         
     }
-    //add the url to the constructor to make it easier to fetch. 
+    
     elementsAndEventListeners() {
         this.classForm = document.querySelector(".new-classroom-form")
         this.dropDown = document.querySelector(".classroom-select")
@@ -58,15 +58,14 @@ class ClassroomApp {
     
     getDropDownChange(e) {
         this.classroom.innerHTML = "";
-        // let input = document.createElement("input")
         let input = document.querySelector('#classroom-id')
-        // input.type = "hidden"
         input.value = e.target.value
         this.newStudentForm.appendChild(input)
         let filteredClassroom = this.allClassrooms.find(room => room.id === parseInt(e.target.value, 10))
         filteredClassroom.students.forEach(student => {
             new Student(student)
         })
+        this.newStudentForm.style.visibility = "visible"
     }
 
     getContentsOfStudentForm(e) {

@@ -26,9 +26,6 @@ class Student {
            let foundStudent = document.querySelector(`div[data-id="${data.id}"]`)
             foundStudent.remove()
         })
-        // let foundStudent = document.querySelector([data-e.target])
-        // console.log('found student', foundStudent)
-        // foundStudent.remove()
     }
 
    
